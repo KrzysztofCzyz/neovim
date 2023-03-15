@@ -288,10 +288,10 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' , 'terraform'},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -401,6 +401,8 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+local lspconf = require 'lspconfig'
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -419,6 +421,9 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+--  terraformls = {
+--    root_dir = lspconf.util.root_pattern('*.tf','*.tfvars')
+--  }
 }
 
 -- Setup neovim lua configuration
@@ -492,6 +497,8 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+vim.lsp.set_log_level("debug")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
